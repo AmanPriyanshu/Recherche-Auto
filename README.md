@@ -2,6 +2,26 @@
 
 Recherche-Auto, powered by state-of-the-art LLM - Claude, revolutionizes web-based news research by organizing and encoding data into personalized knowledge graphs. Leveraging LLMs for auto error correction and to dynamically redirect searches upon hitting a dead-end, it's complemented by adaptable retrieval automated generation (RAG) systems for targeted information discovery, ensuring precise and relevant web search outcomes tailored to individual needs.
 
+![Slide-1](images/slide-1.png)
+
+![Slide-2](images/slide-2.png)
+
+![Slide-3](images/slide-3.png)
+
+![Slide-4](images/slide-4.png)
+
+![Slide-5](images/slide-5.png)
+
+![Slide-6](images/slide-6.png)
+
+![Slide-7](images/slide-7.png)
+
+![Slide-8](images/slide-8.png)
+
+![Slide-9](images/slide-9.png)
+
+![Slide-10](images/slide-10.png)
+
 ## The Problem
 
 In today's fast-paced world, professionals and researchers grapple with information overload. The vast, unorganized data available online leads to inefficiencies, with significant time spent on searching for relevant information, often ending in frustration and dead-ends.
