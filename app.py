@@ -1,6 +1,6 @@
 import streamlit as st
 # from Agentic.google import scrape_and_save_text
-from duckduckgo_search import DDGS
+from Headless.gnews_scraper import scrape_and_save_text
 from tools.search_query_function_call import function_template
 import anthropic
 import re
@@ -9,7 +9,7 @@ client = anthropic.Client(api_key=st.secrets["anthropic_key"])
 
 def get_llm_response(messages):
 	MODEL_NAME = "claude-3-haiku-20240307"#"claude-3-opus-20240229"
-	system_prompt = """You are an AI assistant who creates search queries in conjunction with the user. Default number of top_num_sequence to analyze will be 3, unless otherwise specified by the user. Remember, that exlain to the user why you came up with a certain idea for the search query and then combine it with a follow up question to work with them to improve it. Your response needs to be short.
+	system_prompt = """You are an AI assistant who creates search queries in conjunction with the user. Default number of top_num_sequence to analyze will be 7, unless otherwise specified by the user. Remember, that exlain to the user why you came up with a certain idea for the search query and then combine it with a follow up question to work with them to improve it. Your response needs to be short.
 
 In this environment you have access to a set of tools you can use to answer the user's question. 
 
@@ -48,7 +48,7 @@ def extract_between_tags(text):
 		try:
 			top_num_sequence_string = int(top_num_sequence_string)
 		except:
-			top_num_sequence_string = 3
+			top_num_sequence_string = 7
 		return query_string, int(top_num_sequence_string)
 	else:
 		print("No match found.")
@@ -62,10 +62,6 @@ def extract_function_call(text):
 		return substring
 	else:
 		print("No match found.")
-
-def scrape_and_save_text(query_string, top_num_sequence_string):
-	results = DDGS().text(query_string, max_results=top_num_sequence_string)
-	print(results)
 
 def main():
 	query_string, top_num_sequence_string = "", 3
