@@ -13,13 +13,27 @@ client = anthropic.Client(api_key=st.secrets["anthropic_key"])
 def get_csv_response(prompt):
 	system_prompt = "Observe the following news list in short and create a knowledge graph by employing the \"entity\",\"relation\",\"entity\" sequence as CSV. Note: Do not return non-neccessary words, just return the CSV. Ensure the entity and relations, all have less than 5 words."
 	MODEL_NAME = "claude-3-haiku-20240307"
-	function_calling_message = client.messages.create(
+	data_string = client.messages.create(
 		model=MODEL_NAME,
 		max_tokens=512,
 		messages=[{"role": "user", "content": "Contents to be used:\n\n"+str(prompt)}],
 		system=system_prompt
 	).content[0].text
-	return function_calling_message
+	try:
+		edges = []
+		for line in data_string.strip().split("\n"):
+			source, relation, target = line.split(",")
+			edges.append((source, target))
+		G = nx.DiGraph()
+		G.add_edges_from(edges)
+		plt.figure(figsize=(12, 8))
+		pos = nx.spring_layout(G, seed=42)
+		nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=2000, font_size=10, arrows=True)
+		plt.title("Generated Knowledge Graph")
+		st.pyplot(plt)
+		return True
+	except:
+		return False
 
 def get_summary_response(prompt):
 	system_prompt = "Observe the following news list in short and create a 400 word research report, which employs these discussed recent advances in the field."
@@ -123,7 +137,8 @@ def main():
 			summary = get_summary_response(json.dumps(news, indent=4))
 			st.success(summary)
 			knowledge_graph = get_csv_response(json.dumps(news, indent=4))
-			print(knowledge_graph)
+			if not knowledge_graph:
+				st.error("Sorry couldn't plot the knowledge graph for this query, not enough information for structuring.")
 
 if __name__ == '__main__':
 	main()
