@@ -2,3 +2,4 @@ anthropic==0.20.0
 streamlit==1.29.0
 numpy==1.24.3
 selenium==4.18.1
+duckduckgo-search==3.8.3
